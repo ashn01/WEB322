@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>WEB322 App</title>
+  <link rel="stylesheet" href="/css/site.css" type="text/css" />
+  <script type="text/javascript" src="/js/main.js"></script>
+  <!--  full bootstrap 3.3.7 css file -->
+  <link rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+  type="text/css" />
+  <link href="https://fonts.googleapis.com/css?family=Barrio|Indie+Flower" rel="stylesheet">
+  <style>
+
+  </style>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-
+  BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-
+  Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+  crossorigin="anonymous"></script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1>myApp
+            {{#if session.user}}
+            <span class="pull-right">
+
+              <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true">
+                  <span class="glyphicon glyphicon-user"></span>&nbsp;{{session.user.username}}&nbsp;&nbsp;
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  <li><a href="#" data-toggle="modal" data-target="#profileModal"><span class="glyphicon glyphicon-user"></span>&nbsp;Profile</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="/logout"><span class="glyphicon glyphicon-off"></span>&nbsp;Log Out</a></li>
+                </ul>
+              </div>
+
+            </span>
+            {{else}}
+            <span class="pull-right">
+              <a class="btn btn-success"href="/login">&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;</a>
+              <a class="btn btn-primary"href="/register">&nbsp;&nbsp;&nbsp;Register&nbsp;&nbsp;&nbsp;</a>
+            </span>
+            {{/if}}
+          </h1>
+        </div>
+      </div>
+    </div>
+  </header>
+  <nav>
+    <div class="container">
+      <ul class="pull-left">
+        <li> <a href="/"> Home </a> </li>
+        <li> <a href="/about"> About </a> </li>
+      </ul>
+      {{#if session.user}}
+      <ul class="pull-right">
+        <li> <a href="/employees"> All Employees </a> </li>
+        <li> <a href="/managers"> Managers </a> </li>
+        <li> <a href="/departments"> Departments </a> </li>
+      </ul>
+      {{/if}}
+    </div>
+  </nav>
+  <div class="container">
+    {{{body}}}
+  </div>
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>© 2017 - Youngmin Kim</h2>
+        </div>
+      </div>
+    </div>
+  </footer>
+  {{#if session.user}}
+  <!-- Profile Modal -->
+  <div class="modal" id="profileModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="profileModalTitle">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form onsubmit="requestPasswordChange('{{session.user.username}}'); return false;">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span ariahidden="true">&times;</span></button>
+            <h4 class="modal-title" id="profileModalTitle">Profile</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12">
+                <h6>User Name:</h6>
+                <input type="text" class="form-control" value="{{session.user.username}}" disabled/><br/>
+                <h6>Update Password:</h6>
+                <input type="password" class="passwordReset form-control" id="currentPassword" placeholder="Current Password"/><br/>
+                <input type="password" class="passwordReset form-control" id="password" placeholder="New Password"/><br/>
+                <input type="password" class="passwordReset form-control" id="password2" placeholder="Confirm Password"/><br/>
+              </div>
+            </div>
+            <div class="col-md-12 hide" id="passwordChangeError">
+              <div class="alert alert-danger"></div>
+            </div>
+            <div class="col-md-12 hide" id="passwordChangeSuccess">
+              <div class="alert alert-success"></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+</body>
+
+</html>
